@@ -16,6 +16,6 @@ flightRouter.get("/flights/:id([0-9a-fA-f]{24})", getFlightById);
 flightRouter.get("/flights/search", searchFlight);
 flightRouter.post("/flights", isAdmin, addNewFlight); //isAdmin,
 flightRouter.put("/flights/:id([0-9a-fA-f]{24})", isAdmin, updateFlight); //isAdmin,
-flightRouter.delete("/flights/:id", isAdmin, deleteFlight);
+flightRouter.delete("/flights/:id", deleteFlight); //isAdmin,
 
 module.exports = flightRouter;

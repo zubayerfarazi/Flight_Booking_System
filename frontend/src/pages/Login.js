@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useUser } from "../context/UserContext";
+
+import axiosInstance from "../utils/axiosInstance";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useUser();
+  const { user, setUser } = useContext(UserContext);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -21,15 +23,22 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/login",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
+      // const response = await axios.post(
+      //   "http://localhost:4000/api/login",
+      //   {
+      //     email,
+      //     password,
+      //   },
+      //   { withCredentials: true }
+      // );
+      const response = await axiosInstance.post("/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("accessToken", response.data.payload.accessToken);
+      alert("Logged in successfully!");
 
+      // setUser(response.data.payload.user);
       setUser(response.data.payload.user);
       navigate("/");
     } catch (error) {

@@ -12,30 +12,28 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EditBooking from "./pages/EditBooking";
 import EditFlightPage from "./pages/EditFlightPage";
 import Search from "./pages/Search";
-import { UserProvider } from "./context/UserContext";
+import Profile from "./pages/Profile";
+import EditProfilePage from "./pages/EditProfilePage";
 
 const App = () => (
-  <UserProvider>
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/verify/:token" element={<VerifyUser />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/flights" element={<Flights />} />
-        <Route path="/flights/:id" element={<FlightDetails />} />
-        <Route path="/admin/flights/edit/:id" element={<EditFlightPage />} />
-        <Route path="/bookings/:id" element={<Booking />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route
-          path="/admin/bookings/edit/:bookingId"
-          element={<EditBooking />}
-        />
-      </Routes>
-    </Router>
-  </UserProvider>
+  <Router>
+    <Header />
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Registration />} />
+      <Route path="/verify/:token" element={<VerifyUser />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/flights" element={<Flights />} />
+      <Route path="/flights/:id" element={<FlightDetails />} />
+      <Route path="/admin/flights/edit/:id" element={<EditFlightPage />} />
+      <Route path="/bookings/:id" element={<Booking />} />
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/bookings/edit/:bookingId" element={<EditBooking />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/edit-profile" element={<EditProfilePage />} />
+    </Routes>
+  </Router>
 );
 
 export default App;

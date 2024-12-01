@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useUser } from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
 
 const AdminDashboard = () => {
-  const { user } = useUser();
+  const { user } = useContext(UserContext);
   const [flights, setFlights] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [selectedTab, setSelectedTab] = useState("addFlight"); // Default tab
@@ -47,9 +47,13 @@ const AdminDashboard = () => {
   const handleDeleteFlight = async (flightId) => {
     if (window.confirm("Are you sure you want to delete this flight?")) {
       try {
-        await axios.delete(`http://localhost:4000/api/flights/${flightId}`);
-        alert("Flight deleted successfully!");
-        setFlights(flights.filter((flight) => flight._id !== flightId));
+        if (user.isAdmin === true) {
+          await axios.delete(`http://localhost:4000/api/flights/${flightId}`);
+          alert("Flight deleted successfully!");
+          setFlights(flights.filter((flight) => flight._id !== flightId));
+        } else {
+          alert("You must be an Admin to Delete Item.");
+        }
       } catch (error) {
         console.error("Error deleting flight:", error);
         alert("Failed to delete flight.");
@@ -296,18 +300,6 @@ const AdminDashboard = () => {
           <div className=" bg-white shadow-md rounded-lg p-6 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
             <h3 className="text-lg font-bold">Customer Information</h3>
             <div className="flex flex-wrap gap-6">
-              <p>
-                <strong>Name:</strong> {user?.name || "N/A"}
-              </p>
-              <p>
-                <strong>Email:</strong> {user?.email || "N/A"}
-              </p>
-              <p>
-                <strong>Address:</strong> {user?.address || "N/A"}
-              </p>
-              <p>
-                <strong>Phone:</strong> {user?.phone || "N/A"}
-              </p>
               <div className="">
                 {Array.isArray(bookings) && bookings.length > 0 ? (
                   bookings.map((booking) => (
