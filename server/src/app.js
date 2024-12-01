@@ -25,9 +25,7 @@ const limiter = rateLimit({
 
 app.use(
   cors({
-    // origin: "http://localhost:3000",
-    origin: ["https://deploy-mern-12h1.vercel.app"],
-    methods: ["POST", "GET"],
+    origin: "http://localhost:3000",
     credentials: true,
     sameSite: "none",
   })
